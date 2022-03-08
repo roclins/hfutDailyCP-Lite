@@ -1,0 +1,32 @@
+name: hfut-lite
+
+on:
+
+  push:
+    branches: [ main ]
+
+  pull_request:
+    branches: [ main ]
+    
+  schedule:
+    - cron: 15 6 * * *
+
+jobs:
+  
+  Lite:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Install extensions
+        run: |
+          pip3 install setuptools
+          pip3 install -r requirements.txt
+
+      - name: Run python script
+        env:
+            INFO: ${{ secrets.INFO }}
+        run: python3 hfut_lite.py 
